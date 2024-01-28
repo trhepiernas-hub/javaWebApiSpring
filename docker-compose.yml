@@ -2,13 +2,15 @@ version: '3'
 services:
   mysql:
     image: mysql:latest
+    volumes:
+      - ./mysqlDB/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: webapp
-      MYSQL_USER: webapp
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: javaApi
+      MYSQL_USER: javaApi
+      MYSQL_PASSWORD: javaApi
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -17,9 +19,23 @@ services:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: root
   java:
-    build:
-      context: ./docker
+    build: .
     volumes:
       - ./app:/app
     ports:
       - "6969:6969"
+    depends_on:
+      - mysql
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/conf/default.conf:/etc/nginx/conf.d/default.conf
+  php:
+    build:
+      context: ./docker
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
