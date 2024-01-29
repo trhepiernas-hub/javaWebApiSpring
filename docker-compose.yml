@@ -20,8 +20,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
   java:
     build: .
-    volumes:
-      - ./app:/app
     ports:
       - "6969:6969"
     depends_on:
