@@ -2,7 +2,7 @@
 
 ## Proiektua martxan jarri
 
-proiektua deskargatu eta ` docker-compose up -d -build ` komandoa ejekutatu eta ` localhost:80 ` portuan martxan egongo da proiektua
+proiektua deskargatu eta ` docker-compose up -d --build ` komandoa ejekutatu eta ` localhost:80 ` portuan martxan egongo da proiektua
 
 ## Funtzionamedua
 
